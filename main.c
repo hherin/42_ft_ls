@@ -1,16 +1,37 @@
 #include <dirent.h>
 #include <stdio.h>
-#include "libft/inc/libft.h"
+#include "ft_ls.h"
 
-int main(void)
+struct option opt; //*opt;
+struct file_info *files;
+
+void err_exit_msg(const char *msg)
 {
-    DIR *dirp = opendir(".");
-    if (dirp == NULL)
-            return (1);
-    struct dirent *dp;
-    while ((dp = readdir(dirp)) != NULL) {
-        printf("name %s\n", dp->name);
-    }
-    (void)closedir(dirp);
-    return (0);
+	ft_putstr_fd((char*)msg, 2);
+	exit(1);
+}
+
+void print_struct(void)
+{
+	struct file_info *tmp = files->prev;
+
+	printf("PATHS : ");
+	while (tmp && tmp != files)
+	{
+		printf("%s ", tmp->name);
+		tmp = tmp->prev;
+	}
+	printf("\nOPTION\n");
+
+	printf("format %d\nrecursive %d\nhid %d\nrev %d\nmodif %d\n", \
+		opt.long_format, opt.recursive, opt.hidded, opt.reverse, opt.modif_order);
+}
+
+int main(int ac, char **av)
+{
+	(void)ac;
+	commande_parsing(++av);
+
+	print_struct();
+	return 0;
 }

@@ -1,10 +1,12 @@
 NAME=	ft_ls
 
-SRCS=	./main.c
+SRCS=	./main.c \
+	./srcs/file_info_utils.c \
+	./srcs/init_ls.c
 
 OBJS=	${SRCS:.c=.o}
 
-CFLAG=	-g3 -fsanitize=address -Wall -Werror -Wextra
+CFLAG:=	-g3 -fsanitize=address -Wall -Werror -Wextra
 
 all:	${NAME}
 
@@ -12,8 +14,8 @@ all:	${NAME}
 		gcc ${CFLAG} -o $@ -c $<
 
 ${NAME}:	${OBJS}
-			@make -C libft
-			gcc ${CFLAG} -o $@ -c $< libft/libft.a
+		@make -C libft
+		gcc ${CFLAG} -o ${NAME} ${OBJS} libft/libft.a 
 
 clean:
 		@make clean -C libft 
