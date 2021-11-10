@@ -1,7 +1,7 @@
 #include "../ft_ls.h"
 
 // Doesnt check if not good option
-void add_option(const char *av)
+static void add_option(const char *av)
 {
 	if (ft_strchr(av, 'R'))
 		opt.recursive = true;
@@ -15,20 +15,18 @@ void add_option(const char *av)
 		opt.modif_order = true;
 }
 
-void commande_parsing(char **av)
+
+void init_ls(char **av)
 {
 	ft_bzero(&opt, sizeof(struct option));
-	files = new_file("./");			// case no path is given
+	dir_list = new_directory("./", NULL);			// case no path is given
 
 	size_t i = 0;
 	while (av[i]) {
-		if (file_list_empty() && av[i][0] == '-')
-			add_option(&av[i][1]);
-		else if (av[i][0] != '-') 
-			add_new_file(new_file(av[i]));
-		else
-			err_exit_msg("wrong output\n");
+		while (default_path && av[i][0] == '-')
+			add_option(&av[i++][1]);
+
+		add_new_directory(dir_list, new_directory(av[i], NULL));
 		i++;
-	}
-	
+	}	
 }

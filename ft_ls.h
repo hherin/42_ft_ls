@@ -11,20 +11,27 @@
 				= 8 if file or not symbolik file
 				= 10 if symbolik link
 */
+#include <time.h> // for type time_t
+
+#define RECURSIVE 1
+#define ROOT 0
 
 extern struct option opt; //*opt;
 
 extern struct file_info *files;
+extern struct directory *dir_list;
+extern bool default_path;
 
-struct file_info
+struct directory
 {
-	char *name;		// change it into list for opti
-	DIR *open;
-	struct dirent *read;
-	bool directory;
-	struct stat info;
-	struct file_info *next;
-	struct file_info *prev;
+	char *name;
+	char *full_path;
+	DIR *open_dir;
+	int is_valid;
+	struct stat buf;
+	struct dirent *read_dir;
+	struct directory *next;
+	struct directory *prev;
 };
 
 struct option
@@ -36,16 +43,25 @@ struct option
 	bool modif_order;
 };
 
-
+/* utils.c */
 void err_exit_msg(const char *msg);
-
-/* file_info_utils.c */
-struct file_info *new_file(const char *name);
-void add_new_file(struct file_info *new);
-bool file_list_empty(void);
+struct directory *new_directory(const char *name, const char *pre_name);
+struct directory *add_new_directory(struct directory *head, struct directory *new);
 
 /* init_ls.c */
-void commande_parsing(char **av);
+void init_ls(char **av);
+
+/* dir_process.c */
+void directory_processor(struct directory *dir, int rec_state);
+
+/* print.c */
+void print_dir_content(struct directory *head);
+
+/* timer.c */
+int datecmp(struct timespec t1, struct timespec t2);
+
+/* free_dir.c */
+void free_dir_list(struct directory *head);
 
 void print_list(void); // debug fction
 

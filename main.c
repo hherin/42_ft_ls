@@ -2,36 +2,18 @@
 #include <stdio.h>
 #include "ft_ls.h"
 
-struct option opt; //*opt;
-struct file_info *files;
+struct option opt;
+struct directory *dir_list;
+bool default_path = true;
 
-void err_exit_msg(const char *msg)
-{
-	ft_putstr_fd((char*)msg, 2);
-	exit(1);
-}
-
-void print_struct(void)
-{
-	struct file_info *tmp = files->prev;
-
-	printf("PATHS : ");
-	while (tmp && tmp != files)
-	{
-		printf("%s ", tmp->name);
-		tmp = tmp->prev;
-	}
-	printf("\nOPTION\n");
-
-	printf("format %d\nrecursive %d\nhid %d\nrev %d\nmodif %d\n", \
-		opt.long_format, opt.recursive, opt.hidded, opt.reverse, opt.modif_order);
-}
+void print_struct(struct directory *head);
 
 int main(int ac, char **av)
 {
 	(void)ac;
-	commande_parsing(++av);
+	init_ls(++av);
 
-	print_struct();
+	directory_processor(dir_list, ROOT);
+	// print_directory();
 	return 0;
 }
