@@ -8,7 +8,18 @@ SRCS=	./srcs/is_type.c \
 		./srcs/alloc_string.c \
 		./srcs/ft_split.c \
 		./srcs/ft_put_fd.c \
-		./srcs/list.c
+		./srcs/list.c \
+		./srcs/ft_printf/src/type/ft_type_pourcent.c \
+		./srcs/ft_printf/src/type/ft_typeC.c \
+		./srcs/ft_printf/src/type/ft_typeD.c \
+		./srcs/ft_printf/src/type/ft_typeP.c \
+		./srcs/ft_printf/src/type/ft_typeS.c \
+		./srcs/ft_printf/src/type/ft_typeU.c \
+		./srcs/ft_printf/src/type/ft_typeX.c \
+		./srcs/ft_printf/src/type/ft_typeXmaj.c \
+		./srcs/ft_printf/src/ft_getopt.c \
+		./srcs/ft_printf/src/ft_printf.c \
+		./srcs/ft_printf/src/ft_struct_print.c \
 
 OBJS=	${SRCS:.c=.o}
 

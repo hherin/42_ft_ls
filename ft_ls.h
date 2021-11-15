@@ -11,14 +11,14 @@
 				= 8 if file or not symbolik file
 				= 10 if symbolik link
 */
-#include <time.h> // for type time_t
+# include <time.h> // for type time_t
+# include <pwd.h>  // getpwuid
+# include <grp.h>   // getgrgid
 
-#define RECURSIVE 1
-#define ROOT 0
+# define RECURSIVE 1
+# define ROOT 0
 
-extern struct option opt; //*opt;
-
-extern struct file_info *files;
+extern struct option opt;
 extern struct directory *dir_list;
 extern bool default_path;
 
@@ -56,6 +56,8 @@ void directory_processor(struct directory *dir, int rec_state);
 
 /* print.c */
 void print_dir_content(struct directory *head);
+void print_not_found_dir(char *name);
+void print_dir_name(char *name);
 
 /* timer.c */
 int datecmp(struct timespec t1, struct timespec t2);

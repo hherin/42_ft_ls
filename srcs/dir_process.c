@@ -5,20 +5,6 @@ int more_than_one_in_list(struct directory *dir)
 	return (dir && dir->next && dir->next->next && dir->next != dir && dir->next->next != dir) ? 1 : 0;
 }
 
-void not_found_dir(char *name)
-{
-	ft_putstr_fd("ls: ", 2);
-	ft_putstr_fd(name, 2);
-	perror(": ");
-}
-
-void print_dir_name(char *name)
-{
-	ft_putstr_fd(name, 1); 
-	ft_putstr_fd(":    ", 1);
-	ft_putstr_fd("\n", 1);
-}
-
 char *ft_str_slash_join(char const *s1, char const *s2)
 {
 	char *new;
@@ -36,35 +22,30 @@ char *ft_str_slash_join(char const *s1, char const *s2)
 	return new;
 }
 
-void print_struct(struct directory *head);
-
 void directory_processor(struct directory *head, int rec_state)
 {
 	struct directory *current_dir = opt.reverse ? head->prev : head->next;
 	struct directory *sub_dir = new_directory(NULL, NULL);
-	int dir_in_current = 0;
-	// printf("------------------------------------\n");
-	while (current_dir != head)
+	// DIR *open_dir = NULL;
+	
+	while (current_dir && current_dir != head)
 	{
-		// printf("current_dir = %s\n", current_dir->name);
-		if (!current_dir->open_dir && rec_state)
+		printf("current %s\n", current_dir->name);
+		// if inside recursive and (not a directory or current_dir == '.' or '..')
+		if (rec_state && (!current_dir->open_dir || (!ft_strncmp(".", current_dir->name, 2) || !ft_strncmp("..", current_dir->name, 3))))
 			;
 		else if (!current_dir->open_dir && !rec_state)
-			not_found_dir(current_dir->name);
+			print_not_found_dir(current_dir->name);
 		else
 		{
-			// printf("\n.................................... %p\n", sub_dir);
 			((!rec_state && more_than_one_in_list(head)) || rec_state) ? print_dir_name(current_dir->full_path) : 0;
-
+			(opt.long_format) ? ft_printf("total %d\n", current_dir->buf.st_blksize / 512) : 0;
+			// loop that store content of the directory in sub_dir
 			while ((current_dir->read_dir = readdir(current_dir->open_dir)))
 			{
-				// printf("read %s\n", current_dir->read_dir->d_name);
-				if ((!ft_strncmp(".", current_dir->read_dir->d_name, 2) || !ft_strncmp("..", current_dir->read_dir->d_name, 3)) && opt.hidded == false)
+				if ((!ft_strncmp(".", current_dir->read_dir->d_name, 1) || !ft_strncmp("..", current_dir->read_dir->d_name, 2)) && opt.hidded == false)
 					continue;
 				add_new_directory(sub_dir, new_directory(current_dir->read_dir->d_name, current_dir->full_path));
-					dir_in_current = 1;
-				// print_struct(sub_dir);
-				// printf("\n");
 			}
 
 			print_dir_content(sub_dir);

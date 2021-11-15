@@ -18,15 +18,17 @@ static void add_option(const char *av)
 
 void init_ls(char **av)
 {
+	dir_list = new_directory(NULL, NULL);
+	size_t i = 0, j = 0;
+
 	ft_bzero(&opt, sizeof(struct option));
-	dir_list = new_directory("./", NULL);			// case no path is given
+	while (av[j] && default_path && av[j][0] == '-') 
+		add_option(&av[j++][1]);
+	i = j;
+	while (av[i]) 
+		add_new_directory(dir_list, new_directory(av[i++], NULL));
 
-	size_t i = 0;
-	while (av[i]) {
-		while (default_path && av[i][0] == '-')
-			add_option(&av[i++][1]);
-
-		add_new_directory(dir_list, new_directory(av[i], NULL));
-		i++;
-	}	
+	if (!dir_list->next)
+		add_new_directory(dir_list, new_directory(".", NULL));
+	
 }

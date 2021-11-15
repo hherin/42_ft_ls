@@ -1,9 +1,10 @@
 #ifndef LIBFT__H
 # define LIBFT__H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "../srcs/ft_printf/inc/ft_printf.h"
 
 typedef struct s_list
 {
@@ -45,6 +46,8 @@ int ft_atoi(const char *str);
 int ft_toupper(int c);
 int ft_tolower(int c);
 char *ft_itoa(int n);
+char *ft_itoahexa(long n);
+char *ft_unitoa_base(unsigned int n, char *base);
 
 /* alloc_string.c */
 char *ft_substr(char const *s, unsigned int start, size_t len);
@@ -61,6 +64,8 @@ void ft_putchar_fd(char c, int fd);
 void ft_putstr_fd(char *s, int fd);
 void ft_putendl_fd(char *s, int fd);
 void ft_putnbr_fd(int n, int fd);
+void	ft_putchar(char c);
+void	ft_putstr(char *str);
 
 /* list.c */
 t_list *ft_lstnew(void *content);

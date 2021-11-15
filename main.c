@@ -11,9 +11,10 @@ void print_struct(struct directory *head);
 int main(int ac, char **av)
 {
 	(void)ac;
+
 	init_ls(++av);
 
 	directory_processor(dir_list, ROOT);
-	// print_directory();
+
 	return 0;
 }
