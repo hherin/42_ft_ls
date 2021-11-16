@@ -30,7 +30,7 @@ void directory_processor(struct directory *head, int rec_state)
 	
 	while (current_dir && current_dir != head)
 	{
-		printf("current %s\n", current_dir->name);
+		// printf("current %s\n", current_dir->name);
 		// if inside recursive and (not a directory or current_dir == '.' or '..')
 		if (rec_state && (!current_dir->open_dir || (!ft_strncmp(".", current_dir->name, 2) || !ft_strncmp("..", current_dir->name, 3))))
 			;
@@ -38,8 +38,11 @@ void directory_processor(struct directory *head, int rec_state)
 			print_not_found_dir(current_dir->name);
 		else
 		{
-			((!rec_state && more_than_one_in_list(head)) || rec_state) ? print_dir_name(current_dir->full_path) : 0;
-			(opt.long_format) ? ft_printf("total %d\n", current_dir->buf.st_blksize / 512) : 0;
+			if ((!rec_state && more_than_one_in_list(head)) || rec_state)
+				ft_printf("%s: \n", current_dir->full_path);
+			if (opt.long_format) 
+				ft_printf("total %d\n", current_dir->buf.st_blksize / 512);
+			
 			// loop that store content of the directory in sub_dir
 			while ((current_dir->read_dir = readdir(current_dir->open_dir)))
 			{
