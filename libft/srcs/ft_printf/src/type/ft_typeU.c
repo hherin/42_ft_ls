@@ -33,7 +33,7 @@ static char	*ft_zeropad(char *s, char *tmp, s_option opt, size_t size)
 	}
 	else
 	{
-		abso = (opt.width < 0) ? ft_strlen(s) : opt.width;
+		abso = (opt.width < 0) ? (int)ft_strlen(s) : opt.width;
 		zero = (opt.flag.zero) ? abso - ft_strlen(s): 0;
 		start = (opt.flag.minus || opt.width < 0) ? 0 : size - FT_MAX(ft_strlen(s), zero);
 		while (i++ < zero)

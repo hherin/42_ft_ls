@@ -33,7 +33,7 @@ static int		ft_nblen(unsigned int nb)
 {
 	int len = 0;
 
-	if (nb >= 0 && nb < 10)
+	if (nb < 10)
 		return 1;
 	while (nb > 0)
 	{
@@ -78,7 +78,7 @@ static	unsigned int	length_n_unsigned(unsigned int n, char *base)
 	unsigned int		length;
 
 	length = (n == 0) ? 1 : 0;
-	while (n > 0 || n < 0)
+	while (n)
 	{
 		n = n / ft_strlen(base);
 		length++;
@@ -121,10 +121,7 @@ char					*ft_unitoa_base(unsigned int n, char *base)
 	p[length] = '\0';
 	while (length)
 	{
-		if (n < 0)
-			p[--length] = base[n % size];
-		else
-			p[--length] = base[n % size];
+		p[--length] = base[n % size];
 		n = n / size;
 	}
 	return (p);
