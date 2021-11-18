@@ -1,10 +1,10 @@
-#include "../ft_ls.h"
+#include "ft_ls.h"
 
 // change fd
 void colored_name(const char *name)
 {
 	ft_putstr_fd("\033[1;36m", 1);
-	ft_putstr_fd((char*)name, 1);
+	ft_putstr_fd((char *)name, 1);
 	ft_putstr_fd("\033[0m\n", 1);
 }
 
@@ -25,10 +25,10 @@ static void print_long_format(struct directory *dir)
 	time += 8;
 	while (!ft_isdigit(*time))
 		time++;
-	while(ft_isdigit(*time))
+	while (ft_isdigit(*time))
 		time++;
 	ft_printf("%.5s ", time + 1);
-	S_ISDIR(dir->buf.st_mode) ? colored_name(dir->name) :  ft_printf("%s\n", dir->name);
+	S_ISDIR(dir->buf.st_mode) ? colored_name(dir->name) : ft_printf("%s\n", dir->name);
 }
 
 void print_dir_content(struct directory *head)
@@ -43,9 +43,8 @@ void print_dir_content(struct directory *head)
 			S_ISDIR(tmp->buf.st_mode) ? colored_name(tmp->name) : ft_printf("%s\n", tmp->name);
 		tmp = opt.reverse ? tmp->prev : tmp->next;
 	}
-	ft_putchar_fd('\n', 1); 
+	ft_putchar_fd('\n', 1);
 }
-
 
 void print_not_found_dir(char *name)
 {
@@ -53,4 +52,3 @@ void print_not_found_dir(char *name)
 	ft_putstr_fd(name, 2);
 	perror(": ");
 }
-

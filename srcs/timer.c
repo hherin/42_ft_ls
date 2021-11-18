@@ -1,4 +1,4 @@
-#include "../ft_ls.h"
+#include "ft_ls.h"
 
 int datecmp(struct timespec t1, struct timespec t2)
 {

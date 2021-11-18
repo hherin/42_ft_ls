@@ -30,7 +30,7 @@ SRCS = 	./lib/alloc_string.c \
 
 OBJS	= ${SRCS:.c=.o}
 
-CFLAGS	= -g -Wall -Wextra -Werror
+CFLAGS	= -g3 -fsanitize -Wall -Wextra -Werror
 
 
 ${NAME}: ${OBJS}

@@ -1,8 +1,8 @@
-#include "../ft_ls.h"
+#include "ft_ls.h"
 
 void err_exit_msg(const char *msg)
 {
-	ft_putstr_fd((char*)msg, 2);
+	ft_putstr_fd((char *)msg, 2);
 	exit(1);
 }
 
@@ -48,7 +48,7 @@ static int date_sorting(struct directory *new, struct directory *tmp)
 {
 	if (new->is_valid >= 0 && tmp->is_valid < 0)
 		return 1;
-	if (new->is_valid >= 0 && datecmp(tmp->buf.st_mtim, new->buf.st_mtim) > 0)
+	if (new->is_valid >= 0 && datecmp(tmp->buf.st_mtimespec, new->buf.st_mtimespec) > 0)
 		return 1;
 	if (new->is_valid < 0 && tmp->is_valid < 0 && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
 		return 1;
@@ -64,8 +64,9 @@ struct directory *add_new_directory(struct directory *head, struct directory *ne
 
 	if (!head->next && !head->prev)
 		link_dir_list(head, head, new);
-		
-	else {
+
+	else
+	{
 		struct directory *tmp = head->next;
 
 		while (tmp != head && ((!opt.modif_order && alpha_sorting(new, tmp)) || (opt.modif_order && date_sorting(new, tmp))))
@@ -81,7 +82,8 @@ void print_struct(struct directory *head)
 	struct directory *tmp = head->next;
 
 	printf("PATHS : %s ", head->name);
-	while (tmp && tmp != head) {
+	while (tmp && tmp != head)
+	{
 		printf("%s ", tmp->name);
 		tmp = tmp->next;
 	}

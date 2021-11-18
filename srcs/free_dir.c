@@ -1,8 +1,8 @@
-#include "../ft_ls.h"
+#include "ft_ls.h"
 
 static void free_content(struct directory *dir)
 {
-	closedir(dir->open_dir);
+	(dir->open_dir) ? closedir(dir->open_dir) : 0;
 	free(dir->full_path);
 	free(dir->name);
 	free(dir);

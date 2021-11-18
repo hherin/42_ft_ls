@@ -1,4 +1,4 @@
-#include "../ft_ls.h"
+#include "ft_ls.h"
 
 int more_than_one_in_list(struct directory *dir)
 {
@@ -9,7 +9,7 @@ void directory_processor(struct directory *head, int rec_state)
 {
 	struct directory *current_dir = opt.reverse ? head->prev : head->next;
 	struct directory *sub_dir = new_directory(NULL, NULL);
-	
+
 	while (current_dir && current_dir != head)
 	{
 		// if inside recursive and (not a directory or current_dir == '.' or '..')
@@ -21,9 +21,9 @@ void directory_processor(struct directory *head, int rec_state)
 		{
 			if ((!rec_state && more_than_one_in_list(head)) || rec_state)
 				ft_printf("%s: \n", current_dir->full_path);
-			if (opt.long_format) 
+			if (opt.long_format)
 				ft_printf("total %d\n", current_dir->buf.st_blksize / 512);
-			
+
 			// loop that store content of the directory in sub_dir
 			while ((current_dir->read_dir = readdir(current_dir->open_dir)))
 			{

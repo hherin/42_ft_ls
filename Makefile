@@ -1,6 +1,6 @@
 NAME=	ft_ls
 
-SRCS=	./main.c \
+SRCS=	./srcs/main.c \
 		./srcs/init_ls.c \
 		./srcs/utils.c \
 		./srcs/dir_process.c \
