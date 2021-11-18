@@ -2,6 +2,7 @@
 
 static void free_content(struct directory *dir)
 {
+	closedir(dir->open_dir);
 	free(dir->full_path);
 	free(dir->name);
 	free(dir);

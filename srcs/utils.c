@@ -6,8 +6,6 @@ void err_exit_msg(const char *msg)
 	exit(1);
 }
 
-char *ft_str_slash_join(char const *s1, char const *s2);
-
 struct directory *new_directory(const char *name, const char *pre_name)
 {
 	struct directory *new;
@@ -17,7 +15,7 @@ struct directory *new_directory(const char *name, const char *pre_name)
 
 	ft_bzero(&new->buf, sizeof(struct stat));
 
-	new->full_path = ft_str_slash_join(pre_name, name);
+	new->full_path = ft_str_sep_join(pre_name, name, "/");
 	new->name = ft_strdup(name);
 	new->is_valid = stat(new->full_path, &new->buf);
 	new->open_dir = S_ISDIR(new->buf.st_mode) ? opendir(new->full_path) : NULL;

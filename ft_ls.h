@@ -4,7 +4,7 @@
 # include <sys/types.h> // for type off_t
 # include <sys/stat.h> // For stat()
 # include <dirent.h> //opendir + readdir
-# include "libft/inc/libft.h"
+# include "libftprintf/inc/ft_printf.h"
 # include <stdbool.h> // for bool type
 /*
 	struct dirent : d_type = 4 if dir 

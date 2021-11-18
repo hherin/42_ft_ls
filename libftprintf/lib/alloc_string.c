@@ -28,6 +28,23 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	return new;
 }
 
+char		*ft_str_sep_join(char const *s1, char const *s2, char const *sep)
+{
+	char	*new;
+
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	int len1 = ft_strlen(s1), len2 = ft_strlen(s2), len_sep = ft_strlen(sep);
+	if (!(new = ft_calloc(sizeof(char), len1 + len2 + len_sep + 1)))
+		return (NULL);
+	ft_memcpy(new, s1, len1);
+	ft_memcpy(new + len1, sep, len_sep);
+	ft_memcpy(new + len1 + len_sep, s2, len2);
+	return new;
+}
+
 char *ft_strtrim(char const *s1, char const *set)
 {
 	if (!s1)

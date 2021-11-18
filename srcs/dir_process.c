@@ -5,32 +5,13 @@ int more_than_one_in_list(struct directory *dir)
 	return (dir && dir->next && dir->next->next && dir->next != dir && dir->next->next != dir) ? 1 : 0;
 }
 
-char *ft_str_slash_join(char const *s1, char const *s2)
-{
-	char *new;
-
-	if (!s1)
-		return ((char *)ft_strdup(s2));
-	if (!s2)
-		return ((char *)ft_strdup(s1));
-	int len1 = ft_strlen(s1), len2 = ft_strlen(s2);
-	if (!(new = ft_calloc(sizeof(char), len1 + len2 + 2)))
-		return (NULL);
-	ft_memcpy(new, s1, len1);
-	ft_memcpy(new + len1, "/", 1);
-	ft_memcpy(new + len1 + 1, s2, len2);
-	return new;
-}
-
 void directory_processor(struct directory *head, int rec_state)
 {
 	struct directory *current_dir = opt.reverse ? head->prev : head->next;
 	struct directory *sub_dir = new_directory(NULL, NULL);
-	// DIR *open_dir = NULL;
 	
 	while (current_dir && current_dir != head)
 	{
-		// printf("current %s\n", current_dir->name);
 		// if inside recursive and (not a directory or current_dir == '.' or '..')
 		if (rec_state && (!current_dir->open_dir || (!ft_strncmp(".", current_dir->name, 2) || !ft_strncmp("..", current_dir->name, 3))))
 			;
@@ -58,4 +39,5 @@ void directory_processor(struct directory *head, int rec_state)
 		sub_dir = new_directory(NULL, NULL);
 		current_dir = opt.reverse ? current_dir->prev : current_dir->next;
 	}
+	free_dir_list(sub_dir);
 }

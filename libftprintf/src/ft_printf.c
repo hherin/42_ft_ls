@@ -12,17 +12,6 @@
 
 #include "../inc/ft_printf.h"
 
- char *ft_joins(char *begin, char *end, char *s2)
-{
-	char *tmp;
-	char *tmp2;
-
-	tmp = ft_substr(begin, 0, end - begin);
-	tmp2 = ft_strjoin(s2, tmp);
-	free(tmp);
-	return tmp2;
-}
-
 static char *get_variable(char str, s_print *tab, s_option opt, va_list ap)
 {
 	size_t j;
@@ -39,8 +28,6 @@ static char *get_variable(char str, s_print *tab, s_option opt, va_list ap)
 	}
 	return (tmp);
 }
-
-#include <stdio.h>
 
 static int ft_finalprint(va_list ap, char *str, s_print *tab)
 {
@@ -79,7 +66,6 @@ int ft_printf(const char *format, ...)
 
 	tab = ft_struct_printf();
 	ret = ft_finalprint(ap, (char*)format, tab);
-	printf("ret %d\n", ret);
 	free(tab);
 	va_end(ap);
 	return (ret);
