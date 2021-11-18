@@ -50,7 +50,7 @@ static int date_sorting(struct directory *new, struct directory *tmp)
 {
 	if (new->is_valid >= 0 && tmp->is_valid < 0)
 		return 1;
-	if (new->is_valid >= 0 && datecmp(tmp->buf.st_mtimespec, new->buf.st_mtimespec) > 0)
+	if (new->is_valid >= 0 && datecmp(tmp->buf.st_mtim, new->buf.st_mtim) > 0)
 		return 1;
 	if (new->is_valid < 0 && tmp->is_valid < 0 && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
 		return 1;
@@ -90,6 +90,5 @@ void print_struct(struct directory *head)
 	printf("\n");
 	// printf("\nOPTION\n");
 
-	// printf("format %d\nrecursive %d\nhid %d\nrev %d\nmodif %d\n", \
-	// 	opt.long_format, opt.recursive, opt.hidded, opt.reverse, opt.modif_order);
+	// printf("format %d\nrecursive %d\nhid %d\nrev %d\nmodif %d\n", //opt.long_format, opt.recursive, opt.hidded, opt.reverse, opt.modif_order);
 }

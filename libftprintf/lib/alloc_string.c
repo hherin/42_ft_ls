@@ -17,9 +17,9 @@ char		*ft_strjoin(char const *s1, char const *s2)
 	char	*new;
 
 	if (!s1)
-		return ((char*)s2);
+		return (ft_strdup(s2));
 	if (!s2)
-		return ((char*)s1);
+		return (ft_strdup(s1));
 	int len1 = ft_strlen(s1), len2 = ft_strlen(s2);
 	if (!(new = ft_calloc(sizeof(char), len1 + len2 + 1)))
 		return (NULL);

@@ -13,13 +13,6 @@
 
 #include "../../inc/ft_printf.h"
 
-// static int	ft_checkerror(s_option opt)
-// {
-// 	if (opt.flag.zero && opt.flag.minus)
-// 		return (1);
-// 	return (0);
-// }
-
 static char	*ft_nbnegative(char *s, char *tmp, s_option opt, size_t size)
 {
 	size_t	start;

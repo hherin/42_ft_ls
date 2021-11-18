@@ -18,15 +18,15 @@ all:	${NAME}
 		gcc ${CFLAG} -o $@ -c $<
 
 ${NAME}:	${OBJS}
-		@make -C libft
-		gcc ${CFLAG} -o ${NAME} ${OBJS} libft/libft.a 
+		@make -C libftprintf
+		gcc ${CFLAG} -o ${NAME} ${OBJS} libftprintf/libftprintf.a 
 
 clean:
-		@make clean -C libft 
+		@make clean -C libftprintf
 		@rm -rf srcs/*.o
 
 fclean:	clean
-		@make fclean -C libft 
+		@make fclean -C libftprintf
 		@rm -rf ${NAME} a.out
 
 re: fclean all

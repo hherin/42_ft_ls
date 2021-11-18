@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getopt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hherin <hherin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lucaslefrancq <lucaslefrancq@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 16:24:58 by hherin            #+#    #+#             */
-/*   Updated: 2019/12/17 23:04:10 by hherin           ###   ########.fr       */
+/*   Updated: 2021/11/16 17:58:24 by lucaslefran      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int		get_precision(char **str, va_list ap)
 	return (ret);
 }
 
-s_option		ft_getopt(va_list ap, char **str)
+s_option		get_options(va_list ap, char **str)
 {
 	s_option	opt;
 
