@@ -16,5 +16,7 @@ int main(int ac, char **av)
 
 	directory_processor(dir_list, ROOT);
 
+	free_dir_list(dir_list);
+	
 	return 0;
 }

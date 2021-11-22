@@ -18,7 +18,6 @@ struct directory *new_directory(const char *name, const char *pre_name)
 	new->full_path = ft_str_sep_join(pre_name, name, "/");
 	new->name = ft_strdup(name);
 	new->is_valid = stat(new->full_path, &new->buf);
-	new->open_dir = S_ISDIR(new->buf.st_mode) ? opendir(new->full_path) : NULL;
 	new->next = NULL;
 	new->prev = NULL;
 

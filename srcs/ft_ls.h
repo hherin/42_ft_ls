@@ -17,6 +17,7 @@
 
 # define RECURSIVE 1
 # define ROOT 0
+# define NEXT_DIR(a, b, c) a ? b : c
 
 extern struct option opt;
 extern struct directory *dir_list;
@@ -26,13 +27,19 @@ struct directory
 {
 	char *name;
 	char *full_path;
-	DIR *open_dir;
-	int is_valid;
 	struct stat buf;
-	struct dirent *read_dir;
+	int is_valid;
 	struct directory *next;
 	struct directory *prev;
 };
+
+typedef struct
+{
+	struct stat dbuf;
+	struct stat lbuf;
+	DIR *open_d;
+	struct dirent *read_d;
+}			dir_info;
 
 struct option
 {
