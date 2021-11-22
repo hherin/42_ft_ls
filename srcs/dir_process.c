@@ -35,8 +35,12 @@ void directory_processor(struct directory *head, int rec_state)
 		lstat(curdir->full_path, &info.lbuf);
 		info.open_d = opendir(curdir->full_path);
 
+		if (!readlink(curdir->full_path, NULL, 0)) {
+			if (!rec_state && opt.long_format) 
+				print_long_format(curdir);
+		}
 		// if inside recursive and (not a directory or curdir == '.' or '..')
-		if (rec_state && (!readlink(curdir->full_path, NULL, 0) || !info.open_d || !ft_strncmp(".", curdir->name, 2) || !ft_strncmp("..", curdir->name, 3)))
+		else if (rec_state && (!info.open_d || !ft_strncmp(".", curdir->name, 2) || !ft_strncmp("..", curdir->name, 3)))
 			;
 		else if (!info.open_d && !rec_state)
 			print_not_found_dir(curdir->name);

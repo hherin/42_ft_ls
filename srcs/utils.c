@@ -17,7 +17,9 @@ struct directory *new_directory(const char *name, const char *pre_name)
 
 	new->full_path = ft_str_sep_join(pre_name, name, "/");
 	new->name = ft_strdup(name);
-	new->is_valid = stat(new->full_path, &new->buf);
+	if (new->full_path)
+		new->is_link = (!readlink(new->full_path, NULL, 0)) ? 1 : 0;
+	new->is_valid = (new->is_link) ? lstat(new->full_path, &new->buf) : stat(new->full_path, &new->buf);
 	new->next = NULL;
 	new->prev = NULL;
 

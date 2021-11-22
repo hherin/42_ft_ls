@@ -8,7 +8,7 @@ void colored_name(const char *name)
 	ft_putstr_fd("\033[0m\n", 1);
 }
 
-static void print_long_format(struct directory *dir)
+void print_long_format(const struct directory *dir)
 {
 	struct passwd *user;
 	struct group *gp;

@@ -29,6 +29,7 @@ struct directory
 	char *full_path;
 	struct stat buf;
 	int is_valid;
+	bool is_link;
 	struct directory *next;
 	struct directory *prev;
 };
@@ -64,7 +65,7 @@ void directory_processor(struct directory *dir, int rec_state);
 /* print.c */
 void print_dir_content(struct directory *head);
 void print_not_found_dir(char *name);
-void print_dir_name(char *name);
+void print_long_format(const struct directory *dir);
 
 /* timer.c */
 int datecmp(struct timespec t1, struct timespec t2);

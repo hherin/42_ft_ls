@@ -13,6 +13,8 @@ static void add_option(const char *av)
 		opt.reverse = true;
 	if (ft_strchr(av, 't'))
 		opt.modif_order = true;
+	else
+		add_new_directory(dir_list, new_directory(av, NULL));
 }
 
 void init_ls(char **av)
@@ -22,10 +24,10 @@ void init_ls(char **av)
 
 	ft_bzero(&opt, sizeof(struct option));
 	while (av[j] && default_path && av[j][0] == '-')
-		add_option(&av[j++][1]);
+		add_option(av[j++]);
 	i = j;
-	while (av[i])
-		add_new_directory(dir_list, new_directory(av[i++], NULL));
+	while (av[j])
+		add_new_directory(dir_list, new_directory(av[j++], NULL));
 
 	if (!dir_list->next)
 		add_new_directory(dir_list, new_directory(".", NULL));
