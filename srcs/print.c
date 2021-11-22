@@ -1,6 +1,5 @@
 #include "ft_ls.h"
 
-// change fd
 void colored_name(const char *name)
 {
 	ft_putstr_fd("\033[1;36m", 1);

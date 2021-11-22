@@ -2,6 +2,7 @@
 
 void err_exit_msg(const char *msg)
 {
+	free_dir_list(dir_list);
 	ft_putstr_fd((char *)msg, 2);
 	exit(1);
 }
@@ -76,20 +77,4 @@ struct directory *add_new_directory(struct directory *head, struct directory *ne
 	}
 
 	return new;
-}
-
-void print_struct(struct directory *head)
-{
-	struct directory *tmp = head->next;
-
-	printf("PATHS : %s ", head->name);
-	while (tmp && tmp != head)
-	{
-		printf("%s ", tmp->name);
-		tmp = tmp->next;
-	}
-	printf("\n");
-	// printf("\nOPTION\n");
-
-	// printf("format %d\nrecursive %d\nhid %d\nrev %d\nmodif %d\n", //opt.long_format, opt.recursive, opt.hidded, opt.reverse, opt.modif_order);
 }
