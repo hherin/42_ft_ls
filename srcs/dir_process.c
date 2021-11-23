@@ -57,7 +57,7 @@ void directory_processor(struct directory *head, int rec_state)
 				ft_printf("%s: \n", curdir->full_path);
 
 			if (opt.long_format)
-				ft_printf("total %d\n", curdir->buf.st_blksize / 512);
+				ft_printf("total %d\n", curdir->buf.st_size);
 
 			// loop that store content of the directory in newdir and print
 			newdir = print_current_dir_list(open_d, curdir->full_path);

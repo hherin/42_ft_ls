@@ -57,7 +57,7 @@ struct directory *new_directory(const char *name, const char *pre_name);
 struct directory *add_new_directory(struct directory *head, struct directory *new);
 
 /* init_ls.c */
-void init_ls(char **av);
+void init_ls(char **av, int ac);
 
 /* dir_process.c */
 void directory_processor(struct directory *dir, int rec_state);
