@@ -1,80 +1,47 @@
 #include "ft_ls.h"
 
+int datecmp(struct timespec t1, struct timespec t2)
+{
+	if (t1.tv_sec < t2.tv_sec || (t1.tv_sec == t2.tv_sec && t1.tv_nsec < t2.tv_nsec))
+		return -1;
+	else if (t1.tv_sec > t2.tv_sec || (t1.tv_sec == t2.tv_sec && t1.tv_nsec > t2.tv_nsec))
+		return 1;
+	return 0;
+}
+
+int dir_total_size(struct directory *head)
+{
+	struct directory *tmp = head->next;
+	int total = 0;
+
+	while (tmp && tmp != head)
+	{
+		if (!*tmp->lpath)
+			total += tmp->buf.st_blocks;
+		tmp = tmp->next;
+	}
+	return total;
+}
+
+void free_dir_list(struct directory *head)
+{
+	struct directory *tmp = (head) ? head->next : NULL;
+	while (tmp && tmp != head)
+	{
+		struct directory *next = tmp->next;
+		free(tmp->full_path);
+		free(tmp->name);
+		free(tmp);
+		tmp = NULL;
+		tmp = next;
+	}
+
+	free(head);
+}
+
 void err_exit_msg(const char *msg)
 {
 	free_dir_list(dir_list);
 	ft_putstr_fd((char *)msg, 2);
 	exit(1);
-}
-
-struct directory *new_directory(const char *name, const char *pre_name)
-{
-	struct directory *new;
-
-	if (!(new = malloc(sizeof(struct directory))))
-		err_exit_msg("Malloc of directory failed\n");
-
-	ft_bzero(&new->buf, sizeof(struct stat));
-
-	new->full_path = ft_str_sep_join(pre_name, name, "/");
-	new->name = ft_strdup(name);
-	if (new->full_path)
-		new->is_link = (!readlink(new->full_path, NULL, 0)) ? 1 : 0;
-	new->is_valid = (new->is_link) ? lstat(new->full_path, &new->buf) : stat(new->full_path, &new->buf);
-	new->next = NULL;
-	new->prev = NULL;
-
-	return new;
-}
-
-static void link_dir_list(struct directory *prev, struct directory *next, struct directory *new)
-{
-	prev->next = new;
-	next->prev = new;
-	new->prev = prev;
-	new->next = next;
-}
-
-static int alpha_sorting(struct directory *new, struct directory *tmp)
-{
-	if (new->is_valid >= 0 && tmp->is_valid < 0)
-		return 1;
-	if (new->is_valid >= 0 && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
-		return 1;
-	if (new->is_valid < 0 && tmp->is_valid < 0 && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
-		return 1;
-	return 0;
-}
-
-static int date_sorting(struct directory *new, struct directory *tmp)
-{
-	if (new->is_valid >= 0 && tmp->is_valid < 0)
-		return 1;
-	if (new->is_valid >= 0 && datecmp(tmp->buf.st_mtimespec, new->buf.st_mtimespec) > 0)
-		return 1;
-	if (new->is_valid < 0 && tmp->is_valid < 0 && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
-		return 1;
-	return 0;
-}
-
-struct directory *add_new_directory(struct directory *head, struct directory *new)
-{
-	default_path = false;
-
-	if (!new)
-		return NULL;
-
-	if (!head->next && !head->prev)
-		link_dir_list(head, head, new);
-
-	else
-	{
-		struct directory *tmp = head->next;
-
-		while (tmp != head && ((!opt.modif_order && alpha_sorting(new, tmp)) || (opt.modif_order && date_sorting(new, tmp))))
-			tmp = tmp->next;
-		link_dir_list(tmp->prev, tmp, new);
-	}
-
-	return new;
 }

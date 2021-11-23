@@ -29,18 +29,10 @@ struct directory
 	char *full_path;
 	struct stat buf;
 	int is_valid;
-	bool is_link;
+	char lpath[512];
 	struct directory *next;
 	struct directory *prev;
 };
-
-typedef struct
-{
-	struct stat dbuf;
-	struct stat lbuf;
-	DIR *open_d;
-	struct dirent *read_d;
-}			dir_info;
 
 struct option
 {
@@ -51,8 +43,7 @@ struct option
 	bool modif_order;
 };
 
-/* utils.c */
-void err_exit_msg(const char *msg);
+/* list_handler.c */
 struct directory *new_directory(const char *name, const char *pre_name);
 struct directory *add_new_directory(struct directory *head, struct directory *new);
 
@@ -67,12 +58,12 @@ void print_dir_content(struct directory *head);
 void print_not_found_dir(char *name);
 void print_long_format(const struct directory *dir);
 
-/* timer.c */
+/* utils.c */
 int datecmp(struct timespec t1, struct timespec t2);
-
-/* free_dir.c */
+int dir_total_size(struct directory *head);
 void free_dir_list(struct directory *head);
+void err_exit_msg(const char *msg);
 
-void print_list(void); // debug fction
+
 
 #endif

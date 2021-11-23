@@ -4,9 +4,8 @@ SRCS=	./srcs/main.c \
 		./srcs/init_ls.c \
 		./srcs/utils.c \
 		./srcs/dir_process.c \
-		./srcs/timer.c \
-		./srcs/print.c \
-		./srcs/free_dir.c
+		./srcs/list_handler.c \
+		./srcs/print.c 
 
 OBJS=	${SRCS:.c=.o}
 

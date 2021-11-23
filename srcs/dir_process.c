@@ -20,7 +20,8 @@ static struct directory *print_current_dir_list(DIR *open_d, const char *full_pa
 		if (S_ISDIR(dbuf.st_mode))
 			add_new_directory(sub_dir, new_directory(read_d->d_name, full_path));
 	}
-
+	if (opt.long_format)
+		ft_printf("total %d\n", dir_total_size(sub_dir));
 	print_dir_content(sub_dir);
 
 	return sub_dir;
@@ -35,7 +36,7 @@ void directory_processor(struct directory *head, int rec_state)
 	{
 		DIR *open_d = opendir(curdir->full_path);
 
-		if (!rec_state && !readlink(curdir->full_path, NULL, 0)) {
+		if (!rec_state && *curdir->lpath) {
 			if (opt.long_format){
 				print_long_format(curdir);
 				ft_putchar_fd('\n', 1);
@@ -47,7 +48,7 @@ void directory_processor(struct directory *head, int rec_state)
 			}
 		}
 		// if inside recursive and (not a directory or curdir == '.' or '..')
-		else if (rec_state && (!open_d || !ft_strncmp(".", curdir->name, 2) || !ft_strncmp("..", curdir->name, 3)))
+		else if (rec_state && (*curdir->lpath || !open_d || !ft_strncmp(".", curdir->name, 2) || !ft_strncmp("..", curdir->name, 3)))
 			;
 		else if (!open_d && !rec_state)
 			print_not_found_dir(curdir->name);
@@ -56,10 +57,7 @@ void directory_processor(struct directory *head, int rec_state)
 			if ((!rec_state && more_than_one_in_list(head)) || rec_state)
 				ft_printf("%s: \n", curdir->full_path);
 
-			if (opt.long_format)
-				ft_printf("total %d\n", curdir->buf.st_size);
-
-			// loop that store content of the directory in newdir and print
+			// loop that store content of the curdir in newdir and print it
 			newdir = print_current_dir_list(open_d, curdir->full_path);
 
 			if (opt.recursive) 
