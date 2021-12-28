@@ -1,11 +1,11 @@
 NAME=	ft_ls
 
 SRCS=	./srcs/main.c \
-		./srcs/init_ls.c \
+		./srcs/file_info_tools.c \
+		./srcs/parse_cmd.c \
 		./srcs/utils.c \
-		./srcs/dir_process.c \
-		./srcs/list_handler.c \
-		./srcs/print.c 
+		./srcs/display_files.c \
+		srcs/rec_file_process.c
 
 OBJS=	${SRCS:.c=.o}
 

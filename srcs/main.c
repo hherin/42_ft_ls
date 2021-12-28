@@ -1,20 +1,18 @@
-#include <dirent.h>
-#include <stdio.h>
-#include "ft_ls.h"
-
-struct option opt;
-struct directory *dir_list;
-bool default_path = true;
-
-void print_struct(struct directory *head);
+#include "../inc/ft_ls.h"
 
 int main(int ac, char **av)
 {
-	init_ls(++av, ac);
+	fileInfo *head = NULL;
+	bool option[256];
 
-	directory_processor(dir_list, ROOT);
+	ft_bzero(option, 256);
+	head = parse_cmd(ac, av, option);
 
-	free_dir_list(dir_list);
-	
+	rec_file_process(head, option, !REC);
+
+	free_fileinfo(head);
+	// printf("R %d | r %d | l %d | a %d | t %d\n", option['R'], option['r'], option['l'], option['a'], option['t']);
+
+	// printf("index %d\n", idx);
 	return 0;
 }

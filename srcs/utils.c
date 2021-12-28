@@ -1,47 +1,61 @@
-#include "ft_ls.h"
+#include "../inc/ft_ls.h"
 
-int datecmp(struct timespec t1, struct timespec t2)
+int alpha_sorted(fileInfo *new, fileInfo *tmp)
 {
-	if (t1.tv_sec < t2.tv_sec || (t1.tv_sec == t2.tv_sec && t1.tv_nsec < t2.tv_nsec))
-		return -1;
-	else if (t1.tv_sec > t2.tv_sec || (t1.tv_sec == t2.tv_sec && t1.tv_nsec > t2.tv_nsec))
+	if (ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
 		return 1;
 	return 0;
 }
 
-int dir_total_size(struct directory *head)
+int date_sorted(fileInfo *new, fileInfo *tmp)
 {
-	struct directory *tmp = head->next;
-	int total = 0;
-
-	while (tmp && tmp != head)
-	{
-		if (!*tmp->lpath)
-			total += tmp->buf.st_blocks;
-		tmp = tmp->next;
-	}
-	return total;
+	struct timespec t1 = tmp->sinfo.st_mtimespec;
+	struct timespec t2 = new->sinfo.st_mtimespec;
+	if (t1.tv_sec > t2.tv_sec || (t1.tv_sec == t2.tv_sec && t1.tv_nsec > t2.tv_nsec))
+		return 1;
+	return 0;
 }
 
-void free_dir_list(struct directory *head)
+int parse_a_sorted(fileInfo *new, fileInfo *tmp)
 {
-	struct directory *tmp = (head) ? head->next : NULL;
-	while (tmp && tmp != head)
-	{
-		struct directory *next = tmp->next;
-		free(tmp->full_path);
-		free(tmp->name);
-		free(tmp);
-		tmp = NULL;
-		tmp = next;
-	}
+	bool is_new_dir = new->is_dir;
+	bool is_tmp_dir = tmp->is_dir;
 
-	free(head);
+	if (new->name[0] == '.') {
+		if (tmp->name[0] == '.' && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
+			return 1;
+	}
+	else { 
+		if (tmp->name[0] == '.')
+			return 1;
+		if (!is_new_dir && !is_tmp_dir && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
+			return 1;
+		if (is_new_dir && !is_tmp_dir)
+			return 1;
+		if (is_new_dir && is_tmp_dir && ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name) + 1) < 0)
+			return 1;
+	}
+	return 0;
 }
 
-void err_exit_msg(const char *msg)
+int parse_d_sorted(fileInfo *new, fileInfo *tmp)
 {
-	free_dir_list(dir_list);
-	ft_putstr_fd((char *)msg, 2);
-	exit(1);
+	bool is_new_dir = new->is_dir;
+	bool is_tmp_dir = tmp->is_dir;
+
+	if (new->name[0] == '.') {
+		if (tmp->name[0] == '.' && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+			return 1;
+	}
+	else { 
+		if (tmp->name[0] == '.')
+			return 1;
+		if (!is_new_dir && !is_tmp_dir && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+			return 1;
+		if (is_new_dir && !is_tmp_dir)
+			return 1;
+		if (is_new_dir && is_tmp_dir && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+			return 1;
+	}
+	return 0;
 }
