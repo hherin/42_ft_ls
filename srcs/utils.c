@@ -44,17 +44,17 @@ int parse_d_sorted(fileInfo *new, fileInfo *tmp)
 	bool is_tmp_dir = tmp->is_dir;
 
 	if (new->name[0] == '.') {
-		if (tmp->name[0] == '.' && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+		if (tmp->name[0] == '.' && date_sorted(tmp, new) > 0)
 			return 1;
 	}
 	else { 
 		if (tmp->name[0] == '.')
 			return 1;
-		if (!is_new_dir && !is_tmp_dir && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+		if (!is_new_dir && !is_tmp_dir && date_sorted(tmp, new) > 0)
 			return 1;
 		if (is_new_dir && !is_tmp_dir)
 			return 1;
-		if (is_new_dir && is_tmp_dir && datecmp(tmp->sinfo.st_mtimespec, new->sinfo.st_mtimespec) > 0)
+		if (is_new_dir && is_tmp_dir && date_sorted(tmp, new) > 0)
 			return 1;
 	}
 	return 0;

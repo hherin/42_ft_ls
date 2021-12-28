@@ -1,5 +1,8 @@
 ft_ls
 Factures
+errors 
+out
+out2
 
 # Prerequisites
 *.d

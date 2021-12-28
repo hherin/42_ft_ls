@@ -11,7 +11,8 @@
 # include <grp.h>
 # include <time.h>
 
-# include "../libftprintf/inc/ft_printf.h"
+# include "../lib/inc/libft.h"
+# include "../lib/inc/ft.h"
 
 #define REC 1
 
