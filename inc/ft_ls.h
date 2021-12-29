@@ -10,6 +10,8 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <fcntl.h>
+# include <sys/ioctl.h>
 
 # include "../lib/inc/libft.h"
 # include "../lib/inc/ft.h"
@@ -51,9 +53,9 @@ int parse_a_sorted(fileInfo *new, fileInfo *tmp);
 int parse_d_sorted(fileInfo *new, fileInfo *tmp);
 
 /* display_files */
-void display_name(fileInfo *f, bool rec, int size, int recindex);
+void display_repo_name(fileInfo *f, bool rec, int size, int recindex);
 void display_list_content(fileInfo *head, bool rev, bool longf);
-void display_file(fileInfo *f, bool longf, size_t max[4]);
+void display_file(fileInfo *f, bool longf, size_t max[4], fileInfo *head);
 
 /* fileinfo_tools */
 void del_fileInfo(fileInfo *f);
@@ -61,6 +63,6 @@ fileInfo *create_new_file(char *name, char *file_path);
 fileInfo *add_new_file(fileInfo *head, fileInfo *new, bool timesorted, int (*as)(fileInfo*, fileInfo*), int (*ds)(fileInfo*, fileInfo*));
 void free_fileinfo(fileInfo *head);
 int import_curr_repo(char *dir, fileInfo *head, bool timesort, bool showall);
-
+size_t get_max_strlen(fileInfo *head);
 
 #endif

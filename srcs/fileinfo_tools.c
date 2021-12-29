@@ -89,3 +89,17 @@ void del_fileInfo(fileInfo *f)
 	free(f->fullpath);
 	free(f);
 }
+
+size_t get_max_strlen(fileInfo *head)
+{
+	fileInfo *tmp = head->next;
+	size_t max_len = 0;
+
+	while (tmp && tmp != head) {
+		size_t len = ft_strlen(tmp->name);
+		if (len > max_len)
+			max_len = len;
+		tmp = tmp->next;
+	}
+	return max_len;
+}

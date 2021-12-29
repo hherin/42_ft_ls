@@ -9,7 +9,7 @@ void rec_file_process(fileInfo *head, bool option[256], bool rec)
 	while (tmp && tmp != head) {
 		if (tmp->is_dir && \
 		(!rec || (rec && ft_strncmp(tmp->name, ".", 2) && ft_strncmp(tmp->name, "..", 3)))) {
-			display_name(tmp, rec, fileInfo_size(head), index);
+			display_repo_name(tmp, rec, fileInfo_size(head), index);
 			int eacces = import_curr_repo(tmp->fullpath, curr_repo, TIME, SHOWALL);
 			if (eacces) {
 				display_list_content(curr_repo, REVERSE, LFORM);
