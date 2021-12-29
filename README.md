@@ -1,5 +1,6 @@
 # ft_ls
 
+Code ls command with options - R a l t r
 
 Sources
 stat()
