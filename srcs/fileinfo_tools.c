@@ -1,8 +1,5 @@
 #include "../inc/ft_ls.h"
 
-int alpha_sorted(fileInfo *new, fileInfo *tmp);
-int date_sorted(fileInfo *new, fileInfo *tmp);
-
 fileInfo *create_new_file(char *name, char *file_path)
 {
 	fileInfo *new = malloc(sizeof(fileInfo));

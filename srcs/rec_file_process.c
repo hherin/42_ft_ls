@@ -1,10 +1,5 @@
 #include "../inc/ft_ls.h"
 
-int fileInfo_size(fileInfo *head);
-int import_curr_repo(char *dir, fileInfo *head, bool timesort, bool showall);
-void set_max_files(const fileInfo *head, size_t max[4]);
-void display_name(fileInfo *f, bool rec, int size, int recindex);
-
 void rec_file_process(fileInfo *head, bool option[256], bool rec)
 {
 	fileInfo *tmp = (REVERSE) ? head->prev : head->next;

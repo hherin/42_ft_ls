@@ -1,9 +1,5 @@
 #include "../inc/ft_ls.h"
 
-void set_max_field(const fileInfo *head, size_t max[4]);
-int dir_total_size(fileInfo *head);
-void del_fileInfo(fileInfo *f);
-
 void display_name(fileInfo *f, bool rec, int size, int recindex)
 {
 	if (rec || (!rec && recindex > 0))

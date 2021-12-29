@@ -1,7 +1,7 @@
 NAME=	ft_ls
 
 SRCS=	./srcs/main.c \
-		./srcs/file_info_tools.c \
+		./srcs/fileinfo_tools.c \
 		./srcs/parse_cmd.c \
 		./srcs/utils.c \
 		./srcs/display_files.c \

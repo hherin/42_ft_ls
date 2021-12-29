@@ -1,7 +1,5 @@
 #include "../inc/ft_ls.h"
 
-void rec_file_process(fileInfo *head, bool option[256], bool recstate);
-
 int main(int ac, char **av)
 {
 	fileInfo *head = NULL;
