@@ -1,5 +1,9 @@
 #include "../inc/ft_ls.h"
 
+int parse_a_sorted(fileInfo *new, fileInfo *tmp);
+int parse_d_sorted(fileInfo *new, fileInfo *tmp);
+fileInfo *add_new_file(fileInfo *head, fileInfo *new, bool timesorted, int (*as)(fileInfo*, fileInfo*), int (*ds)(fileInfo*, fileInfo*));
+
 static void parse_err_msg(fileInfo *new)
 {
 	ft_putstr_fd("ft_ls: ", 2);
@@ -70,7 +74,7 @@ fileInfo *parse_cmd(int ac, char **av, bool option[256])
 			add_new_file(head, new, timesort, &parse_a_sorted, &parse_d_sorted);
 	}
 	
-	display_unfound(error);
+	(error->next) ? display_unfound(error) : 0;
 	
 	return head;
 }

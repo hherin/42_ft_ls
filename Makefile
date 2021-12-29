@@ -5,7 +5,8 @@ SRCS=	./srcs/main.c \
 		./srcs/parse_cmd.c \
 		./srcs/utils.c \
 		./srcs/display_files.c \
-		srcs/rec_file_process.c
+		./srcs/rec_file_process.c \
+		./srcs/format_setters.c
 
 OBJS=	${SRCS:.c=.o}
 

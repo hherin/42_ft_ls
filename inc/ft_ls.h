@@ -15,6 +15,11 @@
 # include "../lib/inc/ft.h"
 
 #define REC 1
+#define SHOWALL option[(int)'a']
+#define LFORM option[(int)'l']
+#define REVERSE option[(int)'r']
+#define TIME option[(int)'t']
+#define RECURS option[(int)'R']
 
 typedef struct fileInfo
 {
@@ -27,29 +32,13 @@ typedef struct fileInfo
 	struct fileInfo *prev;
 }       fileInfo;
 
-void rec_file_process(fileInfo *head, bool option[256], bool recstate);
 
-
-/* ================================= */
 void display_list_content(fileInfo *head, bool rev, bool longf);
-void display_file(fileInfo *f, bool longf);
-
-
-/* ================================= */
+void display_file(fileInfo *f, bool longf, size_t max[4]);
 fileInfo *parse_cmd(int ac, char **av, bool option[256]);
-
-
-/* ================================= */
-int alpha_sorted(fileInfo *new, fileInfo *tmp);
-int date_sorted(fileInfo *new, fileInfo *tmp);
-int parse_a_sorted(fileInfo *new, fileInfo *tmp);
-int parse_d_sorted(fileInfo *new, fileInfo *tmp);
-
-/* ================================= */
-int import_curr_repo(char *dir, fileInfo *head, bool timesort, bool showall);
 fileInfo *create_new_file(char *name, char *file_path);
-void free_fileinfo(fileInfo *head);
 fileInfo *add_new_file(fileInfo *head, fileInfo *new, bool timesorted, int (*as)(fileInfo*, fileInfo*), int (*ds)(fileInfo*, fileInfo*));
-void del_fileInfo(fileInfo *f);
+void free_fileinfo(fileInfo *head);
+
 
 #endif

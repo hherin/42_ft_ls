@@ -1,50 +1,66 @@
 #include "../inc/ft_ls.h"
 
-void print_long_format(const fileInfo *file)
+void set_max_field(const fileInfo *head, size_t max[4]);
+int dir_total_size(fileInfo *head);
+void del_fileInfo(fileInfo *f);
+
+void display_name(fileInfo *f, bool rec, int size, int recindex)
 {
-	struct passwd *user;
-	struct group *gp;
-	char *time;
-
-	if (!(user = getpwuid(file->sinfo.st_uid)))
-		; //err_exit_msg("error from user \n");
-	if (!(gp = getgrgid(file->sinfo.st_gid)))
-		;//err_exit_msg("error from gp \n");
-	time = ctime(&file->sinfo.st_mtime);
-
-	ft_printf("%2.u %s %s %6.d", (unsigned int)file->sinfo.st_nlink, user->pw_name, gp->gr_name, (long)file->sinfo.st_size);
-	ft_printf(" %.3s %.2s ", time + 4, time + 8);
-	time += 8;
-	while (!ft_isdigit(*time))
-		time++;
-	while (ft_isdigit(*time))
-		time++;
-	ft_printf("%.5s ", time + 1);
-	file->is_dir ? ft_printf("\033[1;36m%s\033[0m", file->name) : ft_printf("%s", file->name);
-	if (S_IFLNK == (file->sinfo.st_mode & S_IFMT)) {
-        char lpath[256];
-        ft_bzero(lpath, 256);
-		ft_printf(" -> %s", lpath);
-    }
-	ft_printf("\n");
+	if (rec || (!rec && recindex > 0))
+		ft_printf("\n");
+	if (!rec && size > 1)
+		ft_printf("%s:\n", f->name);
+	else if (rec)
+		ft_printf("%s:\n", f->fullpath);
 }
 
-void display_file(fileInfo *f, bool longf)
+void print_long_format(const fileInfo *file, size_t max[4])
+{
+	char time[13];
+	char lpath[128];
+
+	time[12] ='\0';
+	ft_bzero(lpath, 128);
+	ft_strlcpy(time, ctime(&file->sinfo.st_mtime) + 4, 12);
+
+	if (S_IFLNK == (file->sinfo.st_mode & S_IFMT))
+		readlink(file->fullpath, lpath, 128);
+	char *linkpath;
+	linkpath = (*lpath) ? ft_str_sep_join("-> ", lpath, "") : ft_strdup("");
+	ft_printf("%*.u %*s %*s %*d %s %s %s\n", \
+	max[0], (unsigned int)file->sinfo.st_nlink, \
+	max[1], getpwuid(file->sinfo.st_uid)->pw_name, \
+	max[2], getgrgid(file->sinfo.st_gid)->gr_name, \
+	max[3], (long)file->sinfo.st_size, \
+	time, file->name, linkpath);
+	free(linkpath);
+}
+
+void display_file(fileInfo *f, bool longf, size_t max[4])
 {
     if (longf)
-			print_long_format(f);
+		print_long_format(f, max);
     else
-		ft_printf("%s\n", f->name);
-        // S_IFDIR == (f->sinfo.st_mode & S_IFMT) ? ft_printf("\033[1;36m%s\033[0m\n", f->name) : ft_printf("%s\n", f->name);
+        ft_printf("%s\n", f->name);
 }
 
+/*
+**	print each element of a directory and delete all files in fileInfo head
+**	for the next call of rec_file_process in case option R
+**
+*/
 void display_list_content(fileInfo *head, bool rev, bool longf)
 {
 	fileInfo *tmp = rev ? head->prev : head->next;
+	size_t max[4];
 
-	while (tmp && tmp != head){
+	if (longf) {
+		set_max_field(head, max);
+		ft_printf("total %d\n", dir_total_size(head));
+	}
+	while (tmp && tmp != head) {
 		fileInfo *del = tmp;
-		display_file(tmp, longf);
+		display_file(tmp, longf, max);
         tmp = rev ? tmp->prev : tmp->next;
 		if (!del->is_dir)
 			del_fileInfo(del);

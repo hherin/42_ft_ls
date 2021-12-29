@@ -59,3 +59,26 @@ int parse_d_sorted(fileInfo *new, fileInfo *tmp)
 	}
 	return 0;
 }
+
+int dir_total_size(fileInfo *head)
+{
+	fileInfo *tmp = head->next;
+	int total = 0;
+
+	while (tmp && tmp != head)
+	{
+		total += tmp->sinfo.st_blocks;
+		tmp = tmp->next;
+	}
+	return total;
+}
+
+int fileInfo_size(fileInfo *head)
+{
+	fileInfo *tmp = head->next;
+	int size = 0;
+
+	while (tmp && tmp != head && ++size)
+		tmp = tmp->next;
+	return size;
+}
