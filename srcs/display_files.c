@@ -23,7 +23,7 @@ void print_long_format(const fileInfo *file, size_t max[4])
 		readlink(file->fullpath, lpath, 128);
 	char *linkpath;
 	linkpath = (*lpath) ? ft_str_sep_join("-> ", lpath, "") : ft_strdup("");
-	ft_printf("%*.u %*s %*s %*d %s %s %s\n", \
+	ft_printf("%*.u %-*s %-*s %*d %s %s %s\n", \
 	max[0], (unsigned int)file->sinfo.st_nlink, \
 	max[1], getpwuid(file->sinfo.st_uid)->pw_name, \
 	max[2], getgrgid(file->sinfo.st_gid)->gr_name, \
