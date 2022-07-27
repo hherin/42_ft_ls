@@ -14,18 +14,11 @@ SRCS = 	./lib/alloc_string.c \
 		./lib/list.c\
 		./lib/memstr.c\
 		./lib/stringh.c\
-		./lib/strsearch.c\
-		./printf/ft_printf.c \
-		./printf/ft_strnlen.c \
-		./printf/skip_atoi.c \
-		./printf/to_c.c \
-		./printf/to_n.c \
-		./printf/to_nbr.c \
-		./printf/to_s.c 
+		./lib/strsearch.c
 
 OBJS	= ${SRCS:.c=.o}
 
-CFLAGS	= -g3 -fsanitize=address -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror
 
 
 ${NAME}:	${OBJS}
