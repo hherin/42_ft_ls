@@ -48,26 +48,3 @@ void add_file_into_dir(fileInfo *head, fileInfo *new, int (*sortfcn)(fileInfo*, 
 
   fileInfo_add_front(tmp, new);
 }
-
-void parse_argument(fileInfo *head, fileInfo *new, int (*sortfcn)(fileInfo*, fileInfo*))
-{
-  if (!new)
-    return;
-  (void)new;
-  (void)sortfcn;
-  fileInfo *tmp = head->next;
-  if (head->next == head){
-    return fileInfo_add_front(head, new);
-  }
-  (void)tmp;
-
-  while (tmp != head && !tmp->is_dir) {
-    if (!new->is_dir && (*sortfcn)(new, tmp) < 0)
-      break;
-    tmp = tmp->next;
-  }
-  while (tmp != head && new->is_dir && (*sortfcn)(new, tmp) > 0)
-    tmp = tmp->next;
-
-  fileInfo_add_front(tmp, new);
-}

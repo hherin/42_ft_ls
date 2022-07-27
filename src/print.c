@@ -15,5 +15,5 @@ void print_list(fileInfo *head)
       tmp = tmp->next;
     }
   }
-    printf("\n");
+  printf("\n");
 }

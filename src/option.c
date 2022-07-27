@@ -1,6 +1,6 @@
 #include "../inc/ft_ls.h"
 
-char **get_options(char **av, bool options[5], int (*sortfcn)(fileInfo *, fileInfo*))
+char **get_options(char **av, bool options[5], Sortfcn *func)
 {
   while ((*av) && (*av)[0] == '-' && ft_strlen(*av) > 1) {
     int i = 0;
@@ -31,18 +31,18 @@ char **get_options(char **av, bool options[5], int (*sortfcn)(fileInfo *, fileIn
   
   if (options[REVERSE]) {
     if (options[BY_MODIF_TIME]) {
-      sortfcn = &revdatecmp;
+      *func = &revdatecmp;
     }
     else {
-      sortfcn = &revnamecmp;
+      *func = &revnamecmp;
     }
   }
   else {
     if (options[BY_MODIF_TIME]) {
-      sortfcn = &datecmp;
+      *func = &datecmp;
     }
     else {
-      sortfcn = &namecmp;
+      *func = &namecmp;
     }
   }
   return av;

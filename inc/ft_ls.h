@@ -38,12 +38,12 @@ typedef struct fileInfo
 
 void print_list(fileInfo *head);
 
-
+typedef int (*Sortfcn)(fileInfo *, fileInfo*);
 
 fileInfo *create_element(char *filename, char *parent);
 fileInfo *create_root_list();
 int size_list(fileInfo *head);
-char **get_options(char **av, bool options[5], int (*sortfcn)(fileInfo*, fileInfo*));
+char **get_options(char **av, bool options[5], Sortfcn *func);
 
 
 int namecmp(fileInfo *a, fileInfo *b);
