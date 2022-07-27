@@ -1,16 +1,15 @@
 NAME=	ft_ls
 
-SRCS=	./srcs/main.c \
-		./srcs/fileinfo_tools.c \
-		./srcs/parse_cmd.c \
-		./srcs/utils.c \
-		./srcs/display_files.c \
-		./srcs/rec_file_process.c \
-		./srcs/format_setters.c
-
+SRCS=	./src/main.c \
+			./src/fileInfo_utils.c \
+			./src/option.c \
+			./src/sort.c \
+			./src/ls_routine.c \
+			./src/print.c
+	
 OBJS=	${SRCS:.c=.o}
 
-CFLAG:=	-g3 -fsanitize=address -Wall -Werror -Wextra
+CFLAG:= -g -Wall -Werror -Wextra
 
 all:	${NAME}
 
