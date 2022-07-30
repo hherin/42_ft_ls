@@ -1,9 +1,10 @@
 NAME=	ft_ls
 
 SRCS=	./src/main.c \
-			./src/fileInfo_utils.c \
+			./src/utils/fileInfo.c \
+			./src/utils/sort.c \
+			./src/utils/format.c \
 			./src/option.c \
-			./src/sort.c \
 			./src/ls_routine.c \
 			./src/print.c
 	
@@ -22,7 +23,7 @@ ${NAME}:	${OBJS}
 
 clean:
 		@make clean -C lib
-		@rm -rf srcs/*.o
+		@rm -rf src/*.o
 
 fclean:	clean
 		@make fclean -C lib

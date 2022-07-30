@@ -1,4 +1,4 @@
-#include "../inc/ft_ls.h"
+#include "../../inc/ft_ls.h"
 
 fileInfo *deleteElement(fileInfo *elem)
 {
@@ -25,7 +25,6 @@ fileInfo *create_root_list(void)
   fileInfo *new;
 
   if (!(new = malloc(sizeof(fileInfo)))) {
-    // free the list
     printf("ERROR MALLOC LIST\n");
     exit(1);
   }
@@ -45,22 +44,19 @@ fileInfo *create_element(char *filename, char *parent)
     exit(1);
   }
   new->filename = ft_strdup(filename);
-  (void)parent;
+
   if (parent[0]){
     new->fullpath = ft_str_sep_join(parent, new->filename, "/");
-  }
-  else {
+  } else {
     new->fullpath =ft_strdup(filename);
   }
+
   if (lstat(new->fullpath, &new->statp) < 0) {
     printf("FILE DONT EXIST %s\n", new->fullpath);
-    free(new->filename);
-    free(new->fullpath);
-    free(new);
+    deleteElement(new);
     return NULL;
   }
   new->is_dir = (S_ISDIR(new->statp.st_mode)) ? true : false;
-  new->parent = ft_strdup(parent);
   new->next = NULL;
   new->prev = NULL;
   return new;
@@ -70,8 +66,7 @@ void fileInfo_add_front(fileInfo *elem, fileInfo *new)
 {
   if (!new)
     return;
-  fileInfo *tmp;
-  tmp = elem->prev;
+  fileInfo *tmp = elem->prev;
   elem->prev = new;
   new->prev = tmp;
   tmp->next = new;

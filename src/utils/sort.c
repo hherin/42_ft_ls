@@ -1,4 +1,4 @@
-#include "../inc/ft_ls.h"
+#include "../../inc/ft_ls.h"
 
 // COMPARISON
 // a - b < 0
