@@ -21,7 +21,7 @@ void parse_argument(fileInfo *head, fileInfo *new, int (*sortfcn)(fileInfo*, fil
   fileInfo_add_front(tmp, new);
 }
 
-void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5], bool in_rec_mode, int (*sortfcn)(fileInfo *, fileInfo*))
+void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5], int (*sortfcn)(fileInfo *, fileInfo*))
 {
   DIR *opend;
   if ((opend = opendir(currentdir->fullpath)) == NULL) {
@@ -37,14 +37,14 @@ void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5]
       }
     }
 
-    if ((!in_rec_mode && currentdir->next != currentdir->prev) || in_rec_mode)
+    if ((!options[RECURSIVE] && currentdir->next != currentdir->prev) || options[RECURSIVE])
         my_fd_printf(1, "%s:\n", currentdir->fullpath);
-    print_list(dirContent);
+    print_list(dirContent, options);
 
   }
 }
 
-void ls_routine(fileInfo *currentDir, bool options[5], int (*sortfcn)(fileInfo *, fileInfo *), bool in_rec_mode)
+void ls_routine(fileInfo *currentDir, bool options[5], int (*sortfcn)(fileInfo *, fileInfo *))
 {
   if (currentDir->next == currentDir)
     return;
@@ -52,10 +52,10 @@ void ls_routine(fileInfo *currentDir, bool options[5], int (*sortfcn)(fileInfo *
   
   while (tmp != currentDir) {
     fileInfo *dirContent = create_root_list();
-    add_dir_content(tmp, dirContent, options, in_rec_mode, sortfcn);
+    add_dir_content(tmp, dirContent, options, sortfcn);
 
     if (options[RECURSIVE]){
-      ls_routine(dirContent, options, sortfcn, true);
+      ls_routine(dirContent, options, sortfcn);
     }
 
     free_fileInfo_list(dirContent);

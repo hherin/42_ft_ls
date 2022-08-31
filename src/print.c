@@ -4,12 +4,12 @@ fileInfo *deleteElement(fileInfo *elem);
 
 void print_long_format(const fileInfo *file, int max[4])
 {
-	char time[13];
+	char time[14];
 	char lpath[128];
 
-	time[12] ='\0';
+	time[13] ='\0';
 	ft_bzero(lpath, 128);
-	ft_strlcpy(time, ctime(&file->statp.st_mtime) + 4, 12);
+	ft_strlcpy(time, ctime(&file->statp.st_mtime) + 4, 13);
 
 	if (S_IFLNK == (file->statp.st_mode & S_IFMT))
 		readlink(file->fullpath, lpath, 128);
@@ -24,7 +24,6 @@ void print_long_format(const fileInfo *file, int max[4])
 	  time, 
     file->filename, 
     linkpath);
-	
   free(linkpath);
 }
 
@@ -34,8 +33,10 @@ void print_list(fileInfo *head, bool options[5])
   fileInfo *tmp = head->next;
   int max[4];
 
-  if (options[LONG_FORMAT])
+  if (options[LONG_FORMAT]){
     set_max_field(head, max);
+    my_fd_printf(1, "total %d\n", dir_total_size(head));
+  }
 
   while (tmp != head) {
     

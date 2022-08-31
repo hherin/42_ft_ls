@@ -39,7 +39,7 @@ char **get_options(char **av, bool options[5], Sortfcn *func);
 
 /** ls_routine.c **/
 void parse_argument(fileInfo *head, fileInfo *new, int (*sortfcn)(fileInfo*, fileInfo*));
-void ls_routine(fileInfo *head, bool options[5], int (*sortfcn)(fileInfo *, fileInfo *), bool in_rec_mode);
+void ls_routine(fileInfo *head, bool options[5], int (*sortfcn)(fileInfo *, fileInfo *));
 
 /** utils/sort.c **/
 int namecmp(fileInfo *a, fileInfo *b);
@@ -57,6 +57,6 @@ fileInfo *create_root_list();
 /* format_setters */
 void set_max_field(const fileInfo *head, int max[4]);
 void set_max_files(const fileInfo *head, int max[4]);
-
+int dir_total_size(fileInfo *head);
 
 #endif

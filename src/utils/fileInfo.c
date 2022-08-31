@@ -25,7 +25,7 @@ fileInfo *create_root_list(void)
   fileInfo *new;
 
   if (!(new = malloc(sizeof(fileInfo)))) {
-    my_fd_printf(1, "ERROR MALLOC LIST\n");
+    my_fd_printf(2, "ERROR MALLOC LIST\n");
     exit(1);
   }
 
@@ -40,7 +40,7 @@ fileInfo *create_element(char *filename, char *parent)
 
   if (!(new = malloc(sizeof(fileInfo)))) {
     // free the list
-    my_fd_printf(1, "ERROR MALLOC LIST\n");
+    my_fd_printf(2, "ERROR MALLOC LIST\n");
     exit(1);
   }
   new->filename = ft_strdup(filename);
@@ -52,7 +52,7 @@ fileInfo *create_element(char *filename, char *parent)
   }
 
   if (lstat(new->fullpath, &new->statp) < 0) {
-    my_fd_printf(1, "FILE DONT EXIST %s\n", new->fullpath);
+    my_fd_printf(2, "FILE DONT EXIST %s\n", new->fullpath);
     deleteElement(new);
     return NULL;
   }

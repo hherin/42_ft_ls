@@ -25,7 +25,7 @@ int main(int ac, char **av)
     fileInfo_add_front(head, create_element(".", ""));
   }
 
-  ls_routine(head, options, sortfcn, false);
+  ls_routine(head, options, sortfcn);
   free_fileInfo_list(head);
   
   return 0;

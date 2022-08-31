@@ -44,3 +44,17 @@ void set_max_files(const fileInfo *head, int max[4])
 		tmp = tmp->next;
 	}
 }
+
+int dir_total_size(fileInfo *head)
+{
+	fileInfo *tmp = head->next;
+	int total = 0;
+
+	while (tmp && tmp != head)
+	{
+		printf("block %s = %ld\n", tmp->filename, tmp->statp.st_blocks);
+		total += tmp->statp.st_blocks;
+		tmp = tmp->next;
+	}
+	return total;
+}
