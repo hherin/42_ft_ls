@@ -25,7 +25,7 @@ void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5]
 {
   DIR *opend;
   if ((opend = opendir(currentdir->fullpath)) == NULL) {
-    printf("%s\n", currentdir->fullpath);
+    my_fd_printf(1, "%s\n", currentdir->fullpath);
   }
   else {
     struct dirent *rdir;
@@ -38,7 +38,7 @@ void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5]
     }
 
     if ((!in_rec_mode && currentdir->next != currentdir->prev) || in_rec_mode)
-        printf("%s:\n", currentdir->fullpath);
+        my_fd_printf(1, "%s:\n", currentdir->fullpath);
     print_list(dirContent);
 
   }

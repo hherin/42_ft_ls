@@ -16,7 +16,7 @@ void print_long_format(const fileInfo *file, int max[4])
 	char *linkpath;
 	linkpath = (*lpath) ? ft_str_sep_join("-> ", lpath, "") : ft_strdup("");
 
-	printf("%*.u %-*s %-*s %*ld %s %s %s\n", \
+	my_fd_printf(1, "%*u %-*s %-*s %*ld %s %s %s\n", \
 	  max[0], (unsigned int)file->statp.st_nlink, \
 	  max[1], getpwuid(file->statp.st_uid)->pw_name, \
 	  max[2], getgrgid(file->statp.st_gid)->gr_name, \
@@ -42,7 +42,7 @@ void print_list(fileInfo *head, bool options[5])
     if (options[LONG_FORMAT]) {
       print_long_format(tmp, max);
     } else {
-      printf("%s\n", tmp->filename);
+      my_fd_printf(1, "%s\n", tmp->filename);
     }
 
     if (!tmp->is_dir || !ft_strncmp(".", tmp->filename, 2) || !ft_strncmp("..", tmp->filename, 3)) {
@@ -52,5 +52,5 @@ void print_list(fileInfo *head, bool options[5])
     }
   }
 
-  printf("\n");
+  my_fd_printf(1, "\n");
 }

@@ -25,7 +25,7 @@ fileInfo *create_root_list(void)
   fileInfo *new;
 
   if (!(new = malloc(sizeof(fileInfo)))) {
-    printf("ERROR MALLOC LIST\n");
+    my_fd_printf(1, "ERROR MALLOC LIST\n");
     exit(1);
   }
 
@@ -40,7 +40,7 @@ fileInfo *create_element(char *filename, char *parent)
 
   if (!(new = malloc(sizeof(fileInfo)))) {
     // free the list
-    printf("ERROR MALLOC LIST\n");
+    my_fd_printf(1, "ERROR MALLOC LIST\n");
     exit(1);
   }
   new->filename = ft_strdup(filename);
@@ -52,7 +52,7 @@ fileInfo *create_element(char *filename, char *parent)
   }
 
   if (lstat(new->fullpath, &new->statp) < 0) {
-    printf("FILE DONT EXIST %s\n", new->fullpath);
+    my_fd_printf(1, "FILE DONT EXIST %s\n", new->fullpath);
     deleteElement(new);
     return NULL;
   }
@@ -121,7 +121,7 @@ int size_list(fileInfo *head)
 
 //   lstat("main.c", &buf);
 
-//   printf("test1 %d\n", (S_IFDIR == (buf.st_mode & S_IFMT)));
-//   printf("test2 %d\n", buf.st_mode & S_IFDIR);
-//   printf("test3 %d\n", S_ISDIR(buf.st_mode));
+//   my_fd_printf(1, "test1 %d\n", (S_IFDIR == (buf.st_mode & S_IFMT)));
+//   my_fd_printf(1, "test2 %d\n", buf.st_mode & S_IFDIR);
+//   my_fd_printf(1, "test3 %d\n", S_ISDIR(buf.st_mode));
 // }

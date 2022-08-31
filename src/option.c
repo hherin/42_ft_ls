@@ -22,7 +22,7 @@ char **get_options(char **av, bool options[5], Sortfcn *func)
           options[RECURSIVE] = true;
           continue;
         default:
-          printf("ERROR OPTION\n");
+          my_fd_printf(1, "ERROR OPTION\n");
           exit(1);
       }
     }

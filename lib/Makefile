@@ -14,7 +14,8 @@ SRCS = 	./lib/alloc_string.c \
 		./lib/list.c\
 		./lib/memstr.c\
 		./lib/stringh.c\
-		./lib/strsearch.c
+		./lib/strsearch.c\
+		./lib/my_fd_printf.c
 
 OBJS	= ${SRCS:.c=.o}
 
