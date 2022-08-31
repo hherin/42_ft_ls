@@ -47,6 +47,7 @@ int ft_tolower(int c);
 char *ft_itoa(int n);
 char *ft_itoahexa(long n);
 char *ft_unitoa_base(unsigned int n, char *base);
+int		skip_atoi(const char **s);
 
 /* alloc_string.c */
 char *ft_substr(char const *s, unsigned int start, size_t len);
