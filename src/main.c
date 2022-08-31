@@ -1,6 +1,7 @@
 #include "../inc/ft_ls.h"
 #include <stdio.h>
 
+fileInfo *main_list = NULL, *sub_list = NULL;
 
 int main(int ac, char **av)
 {
@@ -11,12 +12,14 @@ int main(int ac, char **av)
     options[i] = false;
 
   head = create_root_list();
+  main_list = head;
   Sortfcn sortfcn = &namecmp;
 
   if (ac > 1) {
     av = get_options(++av, options, &sortfcn);
     while (*av) {
-      parse_argument(head, create_element(*av, ""), sortfcn);
+      fileInfo *new = create_element(*av, "");
+      parse_argument(head, new, sortfcn);
       av++;
     }
     (head->next == head) ? fileInfo_add_front(head, create_element(".", "")) : 0;

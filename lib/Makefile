@@ -19,7 +19,7 @@ SRCS = 	./lib/alloc_string.c \
 
 OBJS	= ${SRCS:.c=.o}
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 
 ${NAME}:	${OBJS}

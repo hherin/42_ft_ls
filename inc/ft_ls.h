@@ -27,6 +27,8 @@ typedef struct info
 	struct info *prev;
 }       fileInfo;
 
+extern fileInfo *main_list, *sub_list;
+
 int size_list(fileInfo *head);      // NOT USED
 
 typedef int (*Sortfcn)(fileInfo *, fileInfo*);

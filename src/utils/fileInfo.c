@@ -13,6 +13,8 @@ fileInfo *deleteElement(fileInfo *elem)
 
 void free_fileInfo_list(fileInfo *head)
 {
+  if (!head)
+    return;
   fileInfo *tmp = head->next;
   while (tmp != head) {
     tmp = deleteElement(tmp);
@@ -26,6 +28,8 @@ fileInfo *create_root_list(void)
 
   if (!(new = malloc(sizeof(fileInfo)))) {
     my_fd_printf(2, "ERROR MALLOC LIST\n");
+    free_fileInfo_list(main_list);
+    free_fileInfo_list(sub_list);
     exit(1);
   }
 
@@ -39,7 +43,8 @@ fileInfo *create_element(char *filename, char *parent)
   fileInfo *new;
 
   if (!(new = malloc(sizeof(fileInfo)))) {
-    // free the list
+    free_fileInfo_list(main_list);
+    free_fileInfo_list(sub_list);
     my_fd_printf(2, "ERROR MALLOC LIST\n");
     exit(1);
   }
@@ -50,6 +55,7 @@ fileInfo *create_element(char *filename, char *parent)
   } else {
     new->fullpath =ft_strdup(filename);
   }
+
 
   if (lstat(new->fullpath, &new->statp) < 0) {
     my_fd_printf(2, "FILE DONT EXIST %s\n", new->fullpath);

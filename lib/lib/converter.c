@@ -52,6 +52,7 @@ char			*ft_itoa(int n)
 	len = (n < 0) ? ft_nblen(-n) + 1 : ft_nblen(n);
 	if (!(str = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
+	ft_bzero(str, len + 1);
 	nb = n;
 	if (n < 0)
 	{
@@ -81,6 +82,7 @@ char			*ft_itoa_long(long n)
 	len = (n < 0) ? ft_nblen(-n) + 1 : ft_nblen(n);
 	if (!(str = (char*)malloc(sizeof(char) * len + 1)))
 		return (NULL);
+	ft_bzero(str, len + 1);
 	nb = n;
 	if (n < 0)
 	{

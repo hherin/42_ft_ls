@@ -20,18 +20,22 @@ int namecmp(fileInfo *a, fileInfo *b)
 {
   char *name_a = strdup_tolower(a->filename);
   char *name_b = strdup_tolower(b->filename);
-  return ft_strncmp(name_a, name_b, ft_strlen(name_a));
+  int ret = ft_strncmp(name_a, name_b, ft_strlen(name_a));
   free(name_a);
   free(name_b);
+
+  return ret;
 }
 
 int revnamecmp(fileInfo *a, fileInfo *b)
 {
   char *name_a = strdup_tolower(a->filename);
   char *name_b = strdup_tolower(b->filename);
-  return ft_strncmp(name_b, name_a, ft_strlen(b->filename));
+  int ret = ft_strncmp(name_b, name_a, ft_strlen(b->filename));
   free(name_a);
   free(name_b);
+
+  return ret;
 }
 
 
@@ -44,14 +48,6 @@ int datecmp(fileInfo *a, fileInfo *b)
     return 0;
   else
     return 1;
-  // long sec_diff = a->statp.st_mtimespec.tv_sec - b->statp.st_mtimespec.tv_sec;
-  // long nsec_diff = a->statp.st_mtimespec.tv_nsec - b->statp.st_mtimespec.tv_nsec;
-  // if (sec_diff > 0|| (!sec_diff && nsec_diff > 0))
-  //   return -1;
-  // else if (!sec_diff && !nsec_diff)
-  //   return 0;
-  // else
-  //   return 1;
 }
 
 int revdatecmp(fileInfo *a, fileInfo *b)

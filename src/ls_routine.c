@@ -30,9 +30,9 @@ void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5]
   else {
     struct dirent *rdir;
     while((rdir = readdir(opend))) {
-      fileInfo *new = create_element(rdir->d_name, currentdir->fullpath);
 
       if ((!ft_strncmp(".", rdir->d_name, 1) && options[SHOW_HIDDEN]) || ft_strncmp(".", rdir->d_name, 1)) {
+        fileInfo *new = create_element(rdir->d_name, currentdir->fullpath);
         add_file_into_dir(dirContent, new, sortfcn);
       }
     }
@@ -41,6 +41,7 @@ void add_dir_content(fileInfo *currentdir, fileInfo *dirContent, bool options[5]
         my_fd_printf(1, "%s:\n", currentdir->fullpath);
     print_list(dirContent, options);
 
+    closedir(opend);
   }
 }
 
@@ -52,6 +53,7 @@ void ls_routine(fileInfo *currentDir, bool options[5], int (*sortfcn)(fileInfo *
   
   while (tmp != currentDir) {
     fileInfo *dirContent = create_root_list();
+    sub_list = dirContent;
     add_dir_content(tmp, dirContent, options, sortfcn);
 
     if (options[RECURSIVE]){
